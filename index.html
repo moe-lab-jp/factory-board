@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>製造現場 PDF情報ボード</title>
+  <style>
+    body {
+      font-family: "Meiryo", sans-serif;
+      background: #f2f4f7;
+      margin: 0;
+      padding: 30px;
+      color: #222;
+    }
+    h1 { text-align: center; }
+    .menu {
+      max-width: 850px;
+      margin: 30px auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    a {
+      display: block;
+      padding: 35px 15px;
+      background: #fff;
+      border: 2px solid #2364aa;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #2364aa;
+      text-decoration: none;
+    }
+    a:hover { background: #e5f1ff; }
+    @media (max-width: 600px) {
+      .menu { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <h1>製造現場 PDF情報ボード</h1>
+  <div class="menu">
+    <a href="pdf/document1.pdf" target="_blank">資料１</a>
+    <a href="pdf/document2.pdf" target="_blank">資料２</a>
+    <a href="pdf/document3.pdf" target="_blank">資料３</a>
+    <a href="pdf/document4.pdf" target="_blank">資料４</a>
+  </div>
+</body>
+</html>
