@@ -30,7 +30,7 @@ button,a{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible
 .tile:disabled{cursor:default;opacity:.47;border-top-color:#6b736a}
 .num{font:12px Consolas,monospace;color:var(--amber);letter-spacing:.16em}
 .symbol{font-size:33px;margin:18px 0 15px;line-height:1;color:var(--amber)}
-.tile strong{display:block;font-size:clamp(19px,2vw,28px);letter-spacing:.04em}
+.translation{display:block;margin-top:6px;font-size:13px;line-height:1.4;font-weight:400;letter-spacing:.015em;color:#c5d0c0}.heading-translation{font-size:15px!important;letter-spacing:.02em!important;margin:9px 0 0!important;color:#c5d0c0!important}.bilingual{display:block;line-height:1.3}.bilingual small{display:block;margin-top:5px;font-size:12px;font-weight:500;letter-spacing:0;line-height:1.25}.companylink .bilingual small{color:#e2d3b5}.action .bilingual small{color:#d1dfd0}.action.primary .bilingual small{color:#293127;font-weight:700}.viewer-title .translation{margin-top:4px}.notice .translation{margin-top:5px}.tile strong{display:block;font-size:clamp(19px,2vw,28px);letter-spacing:.04em}
 .meta{display:block;margin-top:11px;font:12px Consolas,monospace;color:#a5b6a7;letter-spacing:.07em}
 .tile:disabled .meta{color:#c2b38e}
 .footer{margin-top:26px;border-top:1px solid #566157;padding-top:18px;display:flex;justify-content:space-between;gap:14px;color:var(--muted);font:12px Consolas,monospace}
@@ -42,10 +42,19 @@ button,a{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible
 .action:hover{filter:brightness(1.14)}
 .action.primary{background:#e1a94e;color:#151b17;border:2px solid #f4c677;font-size:clamp(18px,1.8vw,24px);padding:13px 26px;min-height:64px}
 .pdfbox{width:100%;height:calc(100vh - 215px);min-height:400px;background:#f2f2ee;border:2px solid #849080}
-.pdfbox iframe{width:100%;height:100%;border:0;background:white}
+.pdfbox{position:relative;overflow:hidden}
+.pdfbox iframe{width:100%;height:100%;border:0;background:white;display:block}
+.action.fullscreen-toggle{border:2px solid #e1a94e;color:#f6d08a;background:#29332c}
+.pdfbox:fullscreen,.pdfbox:-webkit-full-screen,.pdfbox.fallback-fullscreen{width:100vw;height:100dvh;min-height:0;max-height:none;border:0;background:#111513}
+.pdfbox.fallback-fullscreen{position:fixed;inset:0;z-index:9999}
+.pdfbox:fullscreen iframe,.pdfbox:-webkit-full-screen iframe,.pdfbox.fallback-fullscreen iframe{height:100%;width:100%}
+.exit-fullscreen{display:none;position:absolute;top:12px;right:18px;z-index:20;padding:12px 20px;min-height:60px;background:#e1a94e;color:#151b17;border:3px solid #fff2c6;box-shadow:0 3px 18px #000b;font-size:19px;font-weight:800;cursor:pointer}
+.exit-fullscreen small{display:block;font-size:12px;margin-top:3px}
+.pdfbox:fullscreen .exit-fullscreen,.pdfbox:-webkit-full-screen .exit-fullscreen,.pdfbox.fallback-fullscreen .exit-fullscreen{display:block}
+body.fallback-lock{overflow:hidden}
 .notice{font-size:12px;color:var(--muted);margin-top:12px}
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tile{min-height:195px}.topright{gap:10px}}
-@media(max-width:650px){.shell{padding:14px}.topline{align-items:flex-start;flex-wrap:wrap}.topright{width:100%;justify-content:space-between}.brand{letter-spacing:.09em}.heading{margin:28px 0 20px}.heading h1{font-size:27px}.system{display:none}.grid{gap:10px}.tile{min-height:160px;padding:17px 14px}.symbol{font-size:25px;margin:15px 0 12px}.tile strong{font-size:18px}.meta{font-size:10px}.footer{flex-direction:column}.viewerbar{align-items:stretch}.viewerbar h2{font-size:22px}.actions{display:grid;grid-template-columns:1fr 1fr}.action{font-size:13px;padding:9px 7px}.action.primary{font-size:16px;padding:9px 7px}.pdfbox{height:calc(100dvh - 235px)}}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tile{min-height:210px}.topright{gap:10px}}
+@media(max-width:650px){.shell{padding:14px}.topline{align-items:flex-start;flex-wrap:wrap}.topright{width:100%;justify-content:space-between}.brand{letter-spacing:.09em}.heading{margin:28px 0 20px}.heading h1{font-size:27px}.system{display:none}.grid{gap:10px}.tile{min-height:188px;padding:17px 14px}.tile .translation{font-size:12px}.companylink{padding:10px 12px}.companylink .bilingual small{font-size:10px}.action .bilingual small{font-size:11px}.symbol{font-size:25px;margin:15px 0 12px}.tile strong{font-size:18px}.meta{font-size:10px}.footer{flex-direction:column}.viewerbar{align-items:stretch}.viewerbar h2{font-size:22px}.actions{display:grid;grid-template-columns:1fr 1fr}.actions .fullscreen-toggle{grid-column:1/-1}.action{font-size:13px;padding:9px 7px}.action.primary{font-size:16px;padding:9px 7px}.pdfbox{height:calc(100dvh - 235px)}}
 </style>
 </head>
 <body>
@@ -53,39 +62,64 @@ button,a{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible
 <header class="topline">
   <div class="brand">OTK SHIGA <small>FACTORY INFORMATION TERMINAL / 01</small></div>
   <div class="topright">
-    <a class="companylink" href="https://www.otk1937.co.jp/" target="_blank" rel="noopener noreferrer" aria-label="OTK公式サイトを別タブで開く">⌂ OTK公式サイト ↗</a>
+    <a class="companylink" href="https://www.otk1937.co.jp/" target="_blank" rel="noopener noreferrer" aria-label="OTK公式サイトを別タブで開く"><span class="bilingual">⌂ OTK公式サイト ↗<small lang="id">Situs Resmi OTK</small></span></a>
     <div class="clock"><div id="clock">--:--:--</div><small id="date">----.--.--</small></div>
   </div>
 </header>
 <section class="dashboard" id="dashboard">
-  <div class="heading"><div><h1>工程管理情報ボード</h1><p>PRODUCTION CONTROL / DOCUMENT ACCESS</p></div><div class="system">TERMINAL READY</div></div>
+  <div class="heading"><div><h1>工程管理情報ボード</h1><p class="translation heading-translation" lang="id">Papan Informasi Manajemen Produksi</p><p>PRODUCTION CONTROL / DOCUMENT ACCESS</p></div><div class="system">TERMINAL READY</div></div>
   <div class="grid">
-    <button class="tile" data-pdf="pdf/document1.pdf" data-title="切断予定表"><span class="num">DOCUMENT / 01</span><div class="symbol">▤</div><strong>切断予定表</strong><span class="meta">PDF VIEWER · DAILY UPDATE</span></button>
-    <button class="tile" data-pdf="pdf/document2.pdf" data-title="出荷予定"><span class="num">DOCUMENT / 02</span><div class="symbol">⇥</div><strong>出荷予定</strong><span class="meta">PDF VIEWER · DAILY UPDATE</span></button>
-    <button class="tile" data-pdf="pdf/document3.pdf" data-title="工程進捗状況"><span class="num">DOCUMENT / 03</span><div class="symbol">▥</div><strong>工程進捗状況</strong><span class="meta">PDF VIEWER · DAILY UPDATE</span></button>
-    <button class="tile" data-pdf="pdf/document4.pdf" data-title="工程計画表"><span class="num">DOCUMENT / 04</span><div class="symbol">▦</div><strong>工程計画表</strong><span class="meta">PDF VIEWER · DAILY UPDATE</span></button>
-    <button class="tile" disabled><span class="num">MODULE / 05</span><div class="symbol">⌁</div><strong>作業日報入力</strong><span class="meta">STANDBY · FUTURE MODULE</span></button>
-    <button class="tile" disabled><span class="num">MODULE / 06</span><div class="symbol">⚙</div><strong>資材発注</strong><span class="meta">STANDBY · FUTURE MODULE</span></button>
+    <button class="tile" data-pdf="pdf/document1.pdf" data-title="切断予定表"><span class="num">DOCUMENT / 01</span><div class="symbol">▤</div><strong>切断予定表</strong><span class="translation" lang="id">Jadwal Pemotongan</span><span class="meta">PDF VIEWER · DAILY UPDATE</span></button>
+    <button class="tile" data-pdf="pdf/document2.pdf" data-title="出荷予定"><span class="num">DOCUMENT / 02</span><div class="symbol">⇥</div><strong>出荷予定</strong><span class="translation" lang="id">Jadwal Pengiriman</span><span class="meta">PDF VIEWER · DAILY UPDATE</span></button>
+    <button class="tile" data-pdf="pdf/document3.pdf" data-title="工程進捗状況"><span class="num">DOCUMENT / 03</span><div class="symbol">▥</div><strong>工程進捗状況</strong><span class="translation" lang="id">Progres Produksi</span><span class="meta">PDF VIEWER · DAILY UPDATE</span></button>
+    <button class="tile" data-pdf="pdf/document4.pdf" data-title="工程計画表"><span class="num">DOCUMENT / 04</span><div class="symbol">▦</div><strong>工程計画表</strong><span class="translation" lang="id">Rencana Produksi</span><span class="meta">PDF VIEWER · DAILY UPDATE</span></button>
+    <button class="tile" disabled><span class="num">MODULE / 05</span><div class="symbol">⌁</div><strong>作業日報入力</strong><span class="translation" lang="id">Input Laporan Kerja Harian</span><span class="meta">STANDBY · FUTURE MODULE</span></button>
+    <button class="tile" disabled><span class="num">MODULE / 06</span><div class="symbol">⚙</div><strong>資材発注</strong><span class="translation" lang="id">Pemesanan Material</span><span class="meta">STANDBY · FUTURE MODULE</span></button>
   </div>
   <footer class="footer"><span>OTK SHIGA / PRODUCTION MANAGEMENT</span><span>PUBLIC DOCUMENT TERMINAL · NO SIGN-IN REQUIRED</span></footer>
 </section>
 <section class="viewer" id="viewer">
-  <div class="viewerbar"><h2 id="viewerTitle">資料閲覧</h2><div class="actions"><button class="action" id="refresh" type="button">↻ 最新版を読み込む</button><button class="action primary" id="back" type="button">⌂ メニューに戻る</button></div></div>
-  <div class="pdfbox"><iframe id="pdfFrame" title="PDF資料"></iframe></div>
-  <div class="notice">PDFは公開資料です。最新版を確認するときは「最新版を読み込む」を押してください。</div>
+  <div class="viewerbar"><div class="viewer-title"><h2 id="viewerTitle">資料閲覧</h2><span class="translation" id="viewerTitleId" lang="id">Lihat Dokumen</span></div><div class="actions"><button class="action" id="refresh" type="button"><span class="bilingual">↻ 最新版を読み込む<small lang="id">Muat Versi Terbaru</small></span></button><button class="action fullscreen-toggle" id="fullscreen" type="button"><span class="bilingual">⛶ 全画面表示<small lang="id">Layar Penuh</small></span></button><button class="action primary" id="back" type="button"><span class="bilingual">⌂ メニューに戻る<small lang="id">Kembali ke Menu</small></span></button></div></div>
+  <div class="pdfbox" id="pdfbox"><iframe id="pdfFrame" title="PDF資料"></iframe><button class="exit-fullscreen" id="exitFullscreen" type="button">⤢ 全画面表示を終わる<small lang="id">Keluar dari Layar Penuh</small></button></div>
+  <div class="notice">PDFは公開資料です。全画面中は右上の黄色いボタンで元の表示に戻れます。最新版を確認するときは「最新版を読み込む」を押してください。<span class="translation" lang="id">Dokumen PDF ini dapat diakses publik. Untuk keluar dari layar penuh, tekan tombol kuning di kanan atas. Tekan “Muat Versi Terbaru” untuk melihat versi terbaru.</span></div>
 </section>
 </main>
 <script>
 const dash=document.getElementById('dashboard');
 const viewer=document.getElementById('viewer');
 const frame=document.getElementById('pdfFrame');
-let currentPdf='';
+const pdfbox=document.getElementById('pdfbox');
+const fullscreenButton=document.getElementById('fullscreen');
+const exitFullscreenButton=document.getElementById('exitFullscreen');
+let currentPdf='';const titlesId={'pdf/document1.pdf':'Jadwal Pemotongan','pdf/document2.pdf':'Jadwal Pengiriman','pdf/document3.pdf':'Progres Produksi','pdf/document4.pdf':'Rencana Produksi'};
 function updateClock(){const d=new Date();document.getElementById('clock').textContent=d.toLocaleTimeString('ja-JP',{hour12:false});document.getElementById('date').textContent=d.toLocaleDateString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit',weekday:'short'});}
 updateClock();setInterval(updateClock,1000);
 function loadPdf(){if(!currentPdf)return;const url=new URL(currentPdf,location.href);url.searchParams.set('v',String(Date.now()));frame.src=url.href;}
-document.querySelectorAll('[data-pdf]').forEach(b=>b.addEventListener('click',()=>{currentPdf=b.dataset.pdf;document.getElementById('viewerTitle').textContent=b.dataset.title;dash.classList.add('hidden');viewer.classList.add('active');loadPdf();window.scrollTo(0,0);}));
+document.querySelectorAll('[data-pdf]').forEach(b=>b.addEventListener('click',()=>{currentPdf=b.dataset.pdf;document.getElementById('viewerTitle').textContent=b.dataset.title;document.getElementById('viewerTitleId').textContent=titlesId[currentPdf]||'Lihat Dokumen';dash.classList.add('hidden');viewer.classList.add('active');loadPdf();window.scrollTo(0,0);}));
 document.getElementById('refresh').addEventListener('click',loadPdf);
-document.getElementById('back').addEventListener('click',()=>{frame.src='about:blank';viewer.classList.remove('active');dash.classList.remove('hidden');currentPdf='';window.scrollTo(0,0);});
+function inFullscreen(){return document.fullscreenElement===pdfbox||document.webkitFullscreenElement===pdfbox||pdfbox.classList.contains('fallback-fullscreen');}
+function syncFullscreen(){const active=inFullscreen();fullscreenButton.setAttribute('aria-pressed',String(active));exitFullscreenButton.setAttribute('aria-hidden',String(!active));}
+async function enterFullscreen(){
+  try{
+    if(pdfbox.requestFullscreen){await pdfbox.requestFullscreen();}
+    else if(pdfbox.webkitRequestFullscreen){await pdfbox.webkitRequestFullscreen();}
+    else{throw new Error('Fullscreen API unavailable');}
+  }catch(e){pdfbox.classList.add('fallback-fullscreen');document.body.classList.add('fallback-lock');}
+  syncFullscreen();
+}
+async function leaveFullscreen(){
+  pdfbox.classList.remove('fallback-fullscreen');document.body.classList.remove('fallback-lock');
+  try{
+    if(document.fullscreenElement===pdfbox&&document.exitFullscreen){await document.exitFullscreen();}
+    else if(document.webkitFullscreenElement===pdfbox&&document.webkitExitFullscreen){document.webkitExitFullscreen();}
+  }catch(e){}syncFullscreen();
+}
+fullscreenButton.addEventListener('click',()=>{if(!inFullscreen())enterFullscreen();else leaveFullscreen();});
+exitFullscreenButton.addEventListener('click',leaveFullscreen);
+document.addEventListener('fullscreenchange',syncFullscreen);
+document.addEventListener('webkitfullscreenchange',syncFullscreen);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&pdfbox.classList.contains('fallback-fullscreen'))leaveFullscreen();});
+document.getElementById('back').addEventListener('click',async()=>{await leaveFullscreen();frame.src='about:blank';viewer.classList.remove('active');dash.classList.remove('hidden');currentPdf='';window.scrollTo(0,0);});
 </script>
 </body>
 </html>
