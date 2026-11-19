@@ -1,23 +1,91 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>OTK SHIGA | 工程管理情報ボード</title>
 <style>
-:root{color-scheme:dark;--bg:#111513;--panel:#1d2421;--edge:#526056;--ink:#e9e9dc;--muted:#a1a99c;--amber:#f4b74f;--green:#7ec8a0}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:repeating-linear-gradient(0deg,transparent 0 4px,#ffffff04 5px),radial-gradient(ellipse at 50% -30%,#354239 0%,#111513 65%);color:var(--ink);font-family:'Yu Gothic','Meiryo',sans-serif}button{font:inherit;cursor:pointer}button:focus-visible{outline:3px solid var(--amber);outline-offset:4px}.shell{max-width:1450px;margin:auto;padding:24px clamp(16px,3vw,50px) 40px}.topline{display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #6e796b;padding:0 0 18px;gap:20px}.brand{font-family:Consolas,monospace;font-size:clamp(15px,2vw,24px);font-weight:700;letter-spacing:.19em;color:var(--amber)}.brand small{display:block;margin-top:7px;font:12px Consolas,monospace;color:var(--muted);letter-spacing:.25em}.clock{text-align:right;font:clamp(15px,2vw,24px) Consolas,monospace;color:#d9e3d5}.clock small{display:block;font:11px Consolas,monospace;color:var(--muted);letter-spacing:.15em}.heading{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:38px 0 26px}.heading h1{font-size:clamp(28px,3.3vw,48px);letter-spacing:.13em;margin:0;font-weight:700}.heading p{margin:8px 0 0;color:var(--muted);font-size:13px;letter-spacing:.13em}.system{font:12px Consolas,monospace;color:var(--green);white-space:nowrap}.system:before{content:'';display:inline-block;width:9px;height:9px;margin-right:9px;background:var(--green);border-radius:50%;box-shadow:0 0 12px #7ec8a088}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}.tile{position:relative;text-align:left;min-height:215px;padding:27px 28px 23px;border:1px solid #687467;border-top:3px solid #b78945;background:linear-gradient(150deg,#28312b,#1a211e 72%);box-shadow:inset 0 1px #ffffff15,0 8px 16px #0005;color:var(--ink);transition:background .15s,transform .15s}.tile:not(:disabled):hover{background:linear-gradient(150deg,#344036,#222c26);transform:translateY(-2px)}.tile:disabled{cursor:default;opacity:.47;border-top-color:#6b736a}.num{font:12px Consolas,monospace;color:var(--amber);letter-spacing:.16em}.symbol{font-size:33px;margin:18px 0 15px;line-height:1;color:var(--amber)}.tile strong{display:block;font-size:clamp(19px,2vw,28px);letter-spacing:.04em}.meta{display:block;margin-top:11px;font:12px Consolas,monospace;color:#a5b6a7;letter-spacing:.07em}.tile:disabled .meta{color:#c2b38e}.footer{margin-top:26px;border-top:1px solid #566157;padding-top:18px;display:flex;justify-content:space-between;gap:14px;color:var(--muted);font:12px Consolas,monospace}.viewer{display:none}.viewer.active{display:block}.dashboard.hidden{display:none}.viewerhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:26px 0 14px;flex-wrap:wrap}.viewerhead h2{margin:0;font-size:clamp(20px,2.4vw,30px)}.actions{display:flex;gap:10px;flex-wrap:wrap}.action{padding:13px 20px;background:#303b33;color:var(--ink);border:1px solid #819083;font-weight:700}.action.primary{background:#e1a94e;color:#151b17;border-color:#f4c677}.pdfbox{width:100%;height:calc(100vh - 220px);min-height:400px;background:#f2f2ee;border:2px solid #849080}.pdfbox iframe{width:100%;height:100%;border:0;background:white}.notice{font-size:12px;color:var(--muted);margin-top:12px}.error{display:none;padding:12px;color:#ffd4aa}.error.visible{display:block}@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tile{min-height:195px}}@media(max-width:560px){.shell{padding:18px 14px}.topline{align-items:start}.brand{letter-spacing:.09em}.heading{margin:30px 0 20px}.heading h1{font-size:27px}.system{display:none}.grid{gap:10px}.tile{min-height:160px;padding:17px 14px}.symbol{font-size:25px;margin:15px 0 12px}.tile strong{font-size:18px}.meta{font-size:10px}.footer{flex-direction:column}.pdfbox{height:calc(100dvh - 225px)}}
+:root{color-scheme:dark;--bg:#111513;--ink:#e9e9dc;--muted:#a1a99c;--amber:#f4b74f;--green:#7ec8a0}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:repeating-linear-gradient(0deg,transparent 0 4px,#ffffff04 5px),radial-gradient(ellipse at 50% -30%,#354239 0%,#111513 65%);color:var(--ink);font-family:'Yu Gothic','Meiryo',sans-serif}
+button,a{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid var(--amber);outline-offset:4px}
+.shell{max-width:1450px;margin:auto;padding:24px clamp(16px,3vw,50px) 40px}
+.topline{display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #6e796b;padding-bottom:18px;gap:20px}
+.brand{font-family:Consolas,monospace;font-size:clamp(15px,2vw,24px);font-weight:700;letter-spacing:.19em;color:var(--amber)}
+.brand small{display:block;margin-top:7px;font:12px Consolas,monospace;color:var(--muted);letter-spacing:.25em}
+.topright{display:flex;align-items:center;gap:22px}
+.companylink{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border:1px solid #9b855c;background:#2d332c;color:#f6d08a;text-decoration:none;font-weight:700;white-space:nowrap}
+.companylink:hover{background:#3d483d}
+.clock{text-align:right;font:clamp(15px,2vw,24px) Consolas,monospace;color:#d9e3d5;white-space:nowrap}
+.clock small{display:block;font:11px Consolas,monospace;color:var(--muted);letter-spacing:.15em}
+.heading{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:38px 0 26px}
+.heading h1{font-size:clamp(28px,3.3vw,48px);letter-spacing:.13em;margin:0;font-weight:700}
+.heading p{margin:8px 0 0;color:var(--muted);font-size:13px;letter-spacing:.13em}
+.system{font:12px Consolas,monospace;color:var(--green);white-space:nowrap}
+.system:before{content:'';display:inline-block;width:9px;height:9px;margin-right:9px;background:var(--green);border-radius:50%;box-shadow:0 0 12px #7ec8a088}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.tile{position:relative;text-align:left;min-height:215px;padding:27px 28px 23px;border:1px solid #687467;border-top:3px solid #b78945;background:linear-gradient(150deg,#28312b,#1a211e 72%);box-shadow:inset 0 1px #ffffff15,0 8px 16px #0005;color:var(--ink);transition:background .15s,transform .15s}
+.tile:not(:disabled):hover{background:linear-gradient(150deg,#344036,#222c26);transform:translateY(-2px)}
+.tile:disabled{cursor:default;opacity:.47;border-top-color:#6b736a}
+.num{font:12px Consolas,monospace;color:var(--amber);letter-spacing:.16em}
+.symbol{font-size:33px;margin:18px 0 15px;line-height:1;color:var(--amber)}
+.tile strong{display:block;font-size:clamp(19px,2vw,28px);letter-spacing:.04em}
+.meta{display:block;margin-top:11px;font:12px Consolas,monospace;color:#a5b6a7;letter-spacing:.07em}
+.tile:disabled .meta{color:#c2b38e}
+.footer{margin-top:26px;border-top:1px solid #566157;padding-top:18px;display:flex;justify-content:space-between;gap:14px;color:var(--muted);font:12px Consolas,monospace}
+.viewer{display:none}.viewer.active{display:block}.dashboard.hidden{display:none}
+.viewerbar{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:0 -8px 12px;padding:14px 8px;background:#151c18;border-bottom:2px solid #687467;box-shadow:0 8px 20px #0009}
+.viewerbar h2{margin:0;font-size:clamp(20px,2.4vw,30px)}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.action{min-height:56px;padding:12px 20px;background:#303b33;color:var(--ink);border:1px solid #819083;font-weight:700;font-size:16px}
+.action:hover{filter:brightness(1.14)}
+.action.primary{background:#e1a94e;color:#151b17;border:2px solid #f4c677;font-size:clamp(18px,1.8vw,24px);padding:13px 26px;min-height:64px}
+.pdfbox{width:100%;height:calc(100vh - 215px);min-height:400px;background:#f2f2ee;border:2px solid #849080}
+.pdfbox iframe{width:100%;height:100%;border:0;background:white}
+.notice{font-size:12px;color:var(--muted);margin-top:12px}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tile{min-height:195px}.topright{gap:10px}}
+@media(max-width:650px){.shell{padding:14px}.topline{align-items:flex-start;flex-wrap:wrap}.topright{width:100%;justify-content:space-between}.brand{letter-spacing:.09em}.heading{margin:28px 0 20px}.heading h1{font-size:27px}.system{display:none}.grid{gap:10px}.tile{min-height:160px;padding:17px 14px}.symbol{font-size:25px;margin:15px 0 12px}.tile strong{font-size:18px}.meta{font-size:10px}.footer{flex-direction:column}.viewerbar{align-items:stretch}.viewerbar h2{font-size:22px}.actions{display:grid;grid-template-columns:1fr 1fr}.action{font-size:13px;padding:9px 7px}.action.primary{font-size:16px;padding:9px 7px}.pdfbox{height:calc(100dvh - 235px)}}
 </style>
 </head>
-<body><main class="shell"><header class="topline"><div class="brand">OTK SHIGA <small>FACTORY INFORMATION TERMINAL / 01</small></div><div class="clock"><div id="clock">--:--:--</div><small id="date">----.--.--</small></div></header>
-<section class="dashboard" id="dashboard"><div class="heading"><div><h1>工程管理情報ボード</h1><p>PRODUCTION CONTROL / DOCUMENT ACCESS</p></div><div class="system">TERMINAL READY</div></div><div class="grid">
-<button class="tile" data-pdf="pdf/document1.pdf" data-title="切断予定表"><span class="num">DOCUMENT / 01</span><div class="symbol">▤</div><strong>切断予定表</strong><span class="meta">PDF VIEWER · DAILY UPDATE</span></button>
-<button class="tile" data-pdf="pdf/document2.pdf" data-title="出荷予定"><span class="num">DOCUMENT / 02</span><div class="symbol">⇥</div><strong>出荷予定</strong><span class="meta">PDF VIEWER · DAILY UPDATE</span></button>
-<button class="tile" data-pdf="pdf/document3.pdf" data-title="工程進捗状況"><span class="num">DOCUMENT / 03</span><div class="symbol">▥</div><strong>工程進捗状況</strong><span class="meta">PDF VIEWER · DAILY UPDATE</span></button>
-<button class="tile" data-pdf="pdf/document4.pdf" data-title="工程計画表"><span class="num">DOCUMENT / 04</span><div class="symbol">▦</div><strong>工程計画表</strong><span class="meta">PDF VIEWER · DAILY UPDATE</span></button>
-<button class="tile" disabled><span class="num">MODULE / 05</span><div class="symbol">⌁</div><strong>作業日報入力</strong><span class="meta">STANDBY · FUTURE MODULE</span></button>
-<button class="tile" disabled><span class="num">MODULE / 06</span><div class="symbol">⚙</div><strong>資材発注</strong><span class="meta">STANDBY · FUTURE MODULE</span></button>
-</div><footer class="footer"><span>OTK SHIGA / PRODUCTION MANAGEMENT</span><span>PUBLIC DOCUMENT TERMINAL · NO SIGN-IN REQUIRED</span></footer></section>
-<section class="viewer" id="viewer"><div class="viewerhead"><h2 id="viewerTitle">資料閲覧</h2><div class="actions"><button class="action" id="refresh">↻ 最新版を読み込む</button><button class="action primary" id="back">← メニューに戻る</button></div></div><div class="pdfbox"><iframe id="pdfFrame" title="PDF資料"></iframe></div><div class="notice">PDFは公開資料です。最新版を確認するときは「最新版を読み込む」を押してください。</div></section></main>
+<body>
+<main class="shell">
+<header class="topline">
+  <div class="brand">OTK SHIGA <small>FACTORY INFORMATION TERMINAL / 01</small></div>
+  <div class="topright">
+    <a class="companylink" href="https://www.otk1937.co.jp/" target="_blank" rel="noopener noreferrer" aria-label="OTK公式サイトを別タブで開く">⌂ OTK公式サイト ↗</a>
+    <div class="clock"><div id="clock">--:--:--</div><small id="date">----.--.--</small></div>
+  </div>
+</header>
+<section class="dashboard" id="dashboard">
+  <div class="heading"><div><h1>工程管理情報ボード</h1><p>PRODUCTION CONTROL / DOCUMENT ACCESS</p></div><div class="system">TERMINAL READY</div></div>
+  <div class="grid">
+    <button class="tile" data-pdf="pdf/document1.pdf" data-title="切断予定表"><span class="num">DOCUMENT / 01</span><div class="symbol">▤</div><strong>切断予定表</strong><span class="meta">PDF VIEWER · DAILY UPDATE</span></button>
+    <button class="tile" data-pdf="pdf/document2.pdf" data-title="出荷予定"><span class="num">DOCUMENT / 02</span><div class="symbol">⇥</div><strong>出荷予定</strong><span class="meta">PDF VIEWER · DAILY UPDATE</span></button>
+    <button class="tile" data-pdf="pdf/document3.pdf" data-title="工程進捗状況"><span class="num">DOCUMENT / 03</span><div class="symbol">▥</div><strong>工程進捗状況</strong><span class="meta">PDF VIEWER · DAILY UPDATE</span></button>
+    <button class="tile" data-pdf="pdf/document4.pdf" data-title="工程計画表"><span class="num">DOCUMENT / 04</span><div class="symbol">▦</div><strong>工程計画表</strong><span class="meta">PDF VIEWER · DAILY UPDATE</span></button>
+    <button class="tile" disabled><span class="num">MODULE / 05</span><div class="symbol">⌁</div><strong>作業日報入力</strong><span class="meta">STANDBY · FUTURE MODULE</span></button>
+    <button class="tile" disabled><span class="num">MODULE / 06</span><div class="symbol">⚙</div><strong>資材発注</strong><span class="meta">STANDBY · FUTURE MODULE</span></button>
+  </div>
+  <footer class="footer"><span>OTK SHIGA / PRODUCTION MANAGEMENT</span><span>PUBLIC DOCUMENT TERMINAL · NO SIGN-IN REQUIRED</span></footer>
+</section>
+<section class="viewer" id="viewer">
+  <div class="viewerbar"><h2 id="viewerTitle">資料閲覧</h2><div class="actions"><button class="action" id="refresh" type="button">↻ 最新版を読み込む</button><button class="action primary" id="back" type="button">⌂ メニューに戻る</button></div></div>
+  <div class="pdfbox"><iframe id="pdfFrame" title="PDF資料"></iframe></div>
+  <div class="notice">PDFは公開資料です。最新版を確認するときは「最新版を読み込む」を押してください。</div>
+</section>
+</main>
 <script>
-const dash=document.getElementById('dashboard'),viewer=document.getElementById('viewer'),frame=document.getElementById('pdfFrame');let currentPdf='';function updateClock(){const d=new Date();document.getElementById('clock').textContent=d.toLocaleTimeString('ja-JP',{hour12:false});document.getElementById('date').textContent=d.toLocaleDateString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit',weekday:'short'});}updateClock();setInterval(updateClock,1000);
-function loadPdf(){if(!currentPdf)return;const url=new URL(currentPdf,location.href);url.searchParams.set('v',String(Date.now()));frame.src=url.href;}document.querySelectorAll('[data-pdf]').forEach(b=>b.addEventListener('click',()=>{currentPdf=b.dataset.pdf;document.getElementById('viewerTitle').textContent=b.dataset.title;dash.classList.add('hidden');viewer.classList.add('active');loadPdf();window.scrollTo(0,0);}));document.getElementById('refresh').addEventListener('click',loadPdf);document.getElementById('back').addEventListener('click',()=>{frame.src='about:blank';viewer.classList.remove('active');dash.classList.remove('hidden');currentPdf='';window.scrollTo(0,0);});
-</script></body></html>
+const dash=document.getElementById('dashboard');
+const viewer=document.getElementById('viewer');
+const frame=document.getElementById('pdfFrame');
+let currentPdf='';
+function updateClock(){const d=new Date();document.getElementById('clock').textContent=d.toLocaleTimeString('ja-JP',{hour12:false});document.getElementById('date').textContent=d.toLocaleDateString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit',weekday:'short'});}
+updateClock();setInterval(updateClock,1000);
+function loadPdf(){if(!currentPdf)return;const url=new URL(currentPdf,location.href);url.searchParams.set('v',String(Date.now()));frame.src=url.href;}
+document.querySelectorAll('[data-pdf]').forEach(b=>b.addEventListener('click',()=>{currentPdf=b.dataset.pdf;document.getElementById('viewerTitle').textContent=b.dataset.title;dash.classList.add('hidden');viewer.classList.add('active');loadPdf();window.scrollTo(0,0);}));
+document.getElementById('refresh').addEventListener('click',loadPdf);
+document.getElementById('back').addEventListener('click',()=>{frame.src='about:blank';viewer.classList.remove('active');dash.classList.remove('hidden');currentPdf='';window.scrollTo(0,0);});
+</script>
+</body>
+</html>
